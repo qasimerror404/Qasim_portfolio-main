@@ -1,22 +1,38 @@
-FROM node:20 AS base
-WORKDIR /app
-RUN npm i -g pnpm
-RUN npm i -g next
+FROM node:20-alpine AS builder
 
+# Set working directory
+WORKDIR /app
+
+# Install pnpm globally
+RUN npm i -g pnpm
+
+# Copy package files
 COPY package*.json ./
+
+# Install dependencies
 RUN pnpm install
 
+# Copy the rest of the application
 COPY . .
+
+# Build the application
 RUN pnpm build
 
-FROM node:20-alpine3.19 as release
+# Production image
+FROM node:20-alpine AS runner
 WORKDIR /app
+
+# Install pnpm globally
 RUN npm i -g pnpm
 
-COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/package.json ./package.json
-COPY --from=base /app/.next ./.next
+# Copy necessary files from builder stage
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
 
+# Expose port
 EXPOSE 3000
 
+# Start production server
 CMD ["pnpm", "start"]
