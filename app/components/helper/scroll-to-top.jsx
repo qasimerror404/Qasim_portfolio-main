@@ -8,31 +8,34 @@ const DEFAULT_BTN_CLS =
 const SCROLL_THRESHOLD = 50;
 
 const ScrollToTop = () => {
-  const [btnCls, setBtnCls] = useState(DEFAULT_BTN_CLS + " hidden");
+  // Start with hidden by default to ensure server and client match initially
+  const [btnCls, setBtnCls] = useState(`${DEFAULT_BTN_CLS} opacity-0 pointer-events-none`);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+  }, []);
 
-    // Only run in browser environment
-    if (typeof window !== 'undefined' && isMounted) {
-      const handleScroll = () => {
-        if (window.scrollY > SCROLL_THRESHOLD) {
-          setBtnCls(DEFAULT_BTN_CLS.replace(" hidden", ""));
-        } else {
-          setBtnCls(DEFAULT_BTN_CLS + " hidden");
-        }
-      };
+  useEffect(() => {
+    // Only run in browser environment and after component has mounted
+    if (typeof window === 'undefined' || !isMounted) return;
 
-      window.addEventListener("scroll", handleScroll, { passive: true });
+    const handleScroll = () => {
+      if (window.scrollY > SCROLL_THRESHOLD) {
+        setBtnCls(DEFAULT_BTN_CLS);
+      } else {
+        setBtnCls(`${DEFAULT_BTN_CLS} opacity-0 pointer-events-none`);
+      }
+    };
 
-      // Initial check
-      handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-      return () => {
-        window.removeEventListener("scroll", handleScroll, { passive: true });
-      };
-    }
+    // Initial check to set the correct state on first render
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll, { passive: true });
+    };
   }, [isMounted]);
 
   const onClickBtn = () => {
@@ -42,7 +45,7 @@ const ScrollToTop = () => {
   };
 
   return (
-    <button className={btnCls} onClick={onClickBtn}>
+    <button className={btnCls} onClick={onClickBtn} aria-label="Scroll to top">
       <FaArrowUp />
     </button>
   );

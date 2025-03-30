@@ -1,12 +1,16 @@
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Inter } from "next/font/google";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/footer";
-import ScrollToTop from "./components/helper/scroll-to-top";
 import Navbar from "./components/navbar";
 import "./css/card.scss";
 import "./css/globals.scss";
+import dynamic from 'next/dynamic';
+
+// Dynamically import the client components with SSR disabled
+const ClientLayoutWrapper = dynamic(() => import('./components/client-layout-wrapper'), {
+  ssr: true // We can keep SSR true since it no longer has hydration issues
+});
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,18 +20,20 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const gtmId = process.env.NEXT_PUBLIC_GTM || '';
+  
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastContainer />
-        <main className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
-          <Navbar />
-          {children}
-          <ScrollToTop />
-        </main>
-        <Footer />
+        <ClientLayoutWrapper>
+          <main className="min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white">
+            <Navbar />
+            {children}
+          </main>
+          <Footer />
+        </ClientLayoutWrapper>
       </body>
-      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM} />
+      {gtmId && <GoogleTagManager gtmId={gtmId} />}
     </html>
   );
 }

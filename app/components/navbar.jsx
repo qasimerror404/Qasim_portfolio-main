@@ -1,5 +1,5 @@
 "use client";
-// @flow strict
+
 import Link from "next/link";
 import { personalData } from "@/utils/data/personal-data";
 import { useEffect, useState } from "react";
@@ -8,13 +8,29 @@ import { FaBars, FaTimes } from "react-icons/fa";
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hasBlogFeature, setHasBlogFeature] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Check if the blog feature is enabled (user has a dev.to account)
+  // First useEffect to handle mounted state
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Second useEffect to check blog feature
+  useEffect(() => {
+    // Only run this effect on the client-side after mounting
+    if (!mounted) return;
+    
     const checkBlogFeature = async () => {
       if (personalData.devUsername) {
         try {
-          const response = await fetch(`https://dev.to/api/articles?username=${personalData.devUsername}`);
+          const response = await fetch(`https://dev.to/api/articles?username=${personalData.devUsername}`, {
+            cache: 'force-cache' // Add caching to prevent different responses
+          });
+          
+          if (!response.ok) {
+            throw new Error('Failed to fetch blog data');
+          }
+          
           const data = await response.json();
           setHasBlogFeature(Array.isArray(data) && data.length > 0);
         } catch (error) {
@@ -25,11 +41,26 @@ function Navbar() {
     };
     
     checkBlogFeature();
-  }, []);
+  }, [mounted]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  // To prevent hydration mismatch, render a consistent initial state
+  const navLinks = [
+    { href: "/#about", label: "ABOUT" },
+    { href: "/#experience", label: "EXPERIENCE" },
+    { href: "/#skills", label: "SKILLS" },
+    { href: "/#education", label: "EDUCATION" },
+    { href: "/#projects", label: "PROJECTS" },
+    { href: "/#contact", label: "CONTACT" }
+  ];
+
+  // Only add the blog link if we've confirmed it exists and we're client-side
+  if (mounted && hasBlogFeature) {
+    navLinks.splice(4, 0, { href: "/blog", label: "BLOGS" });
+  }
 
   return (
     <nav className="bg-transparent relative z-50">
@@ -53,75 +84,21 @@ function Navbar() {
         </div>
 
         <ul className={`${menuOpen ? 'flex flex-col bg-[#0d1224] p-4 absolute top-16 right-0 left-0 z-50' : 'hidden'} md:flex md:flex-row md:space-x-1 md:static md:bg-transparent`}>
-          <li>
-            <Link 
-              className="block px-4 py-2 no-underline outline-none hover:no-underline" 
-              href="/#about"
-              onClick={() => setMenuOpen(false)}
-            >
-              <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">ABOUT</div>
-            </Link>
-          </li>
-          <li>
-            <Link 
-              className="block px-4 py-2 no-underline outline-none hover:no-underline" 
-              href="/#experience"
-              onClick={() => setMenuOpen(false)}
-            >
-              <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">EXPERIENCE</div>
-            </Link>
-          </li>
-          <li>
-            <Link 
-              className="block px-4 py-2 no-underline outline-none hover:no-underline" 
-              href="/#skills"
-              onClick={() => setMenuOpen(false)}
-            >
-              <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">SKILLS</div>
-            </Link>
-          </li>
-          <li>
-            <Link 
-              className="block px-4 py-2 no-underline outline-none hover:no-underline" 
-              href="/#education"
-              onClick={() => setMenuOpen(false)}
-            >
-              <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">EDUCATION</div>
-            </Link>
-          </li>
-          {hasBlogFeature && (
-            <li>
+          {navLinks.map((link, index) => (
+            <li key={index}>
               <Link 
                 className="block px-4 py-2 no-underline outline-none hover:no-underline" 
-                href="/blog"
+                href={link.href}
                 onClick={() => setMenuOpen(false)}
               >
-                <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">BLOGS</div>
+                <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">{link.label}</div>
               </Link>
             </li>
-          )}
-          <li>
-            <Link 
-              className="block px-4 py-2 no-underline outline-none hover:no-underline" 
-              href="/#projects"
-              onClick={() => setMenuOpen(false)}
-            >
-              <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">PROJECTS</div>
-            </Link>
-          </li>
-          <li>
-            <Link 
-              className="block px-4 py-2 no-underline outline-none hover:no-underline" 
-              href="/#contact"
-              onClick={() => setMenuOpen(false)}
-            >
-              <div className="text-sm text-white transition-colors duration-300 hover:text-pink-600">CONTACT</div>
-            </Link>
-          </li>
+          ))}
         </ul>
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;
