@@ -3,8 +3,14 @@ import { educations } from "@/utils/data/educations";
 import Image from "next/image";
 import { BsPersonWorkspace } from "react-icons/bs";
 import lottieFile from '../../../assets/lottie/study.json';
-import AnimationLottie from "../../helper/animation-lottie";
+import dynamic from 'next/dynamic';
 import GlowCard from "../../helper/glow-card";
+
+// Dynamically import the AnimationLottie component with SSR disabled
+const AnimationLottie = dynamic(() => import("../../helper/animation-lottie"), { 
+  ssr: false,
+  loading: () => <div className="w-3/4 h-3/4 bg-[#101123] rounded-lg animate-pulse"></div>
+});
 
 function Education() {
   return (
