@@ -1,11 +1,22 @@
 // @flow strict
-
 import * as React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 function ProjectCard({ project }) {
+  const { 
+    name, 
+    description, 
+    tools, 
+    role, 
+    code, 
+    demo, 
+    image 
+  } = project;
 
   return (
-    <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full">
+    <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-violet-600/20">
       <div className="flex flex-row">
         <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-pink-500 to-violet-600"></div>
         <div className="h-[1px] w-full bg-gradient-to-r from-violet-600 to-transparent"></div>
@@ -16,53 +27,98 @@ function ProjectCard({ project }) {
           <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-orange-400"></div>
           <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-green-200"></div>
         </div>
-        <p className="text-center ml-3 text-[#16f2b3] text-base lg:text-xl">
-          {project.name}
+        <p className="text-center ml-10 text-[#16f2b3] text-base lg:text-xl font-bold">
+          {name}
         </p>
       </div>
-      <div className="overflow-hidden border-t-[2px] border-indigo-900 px-4 lg:px-8 py-4 lg:py-8">
-        <code className="font-mono text-xs md:text-sm lg:text-base">
-          <div className="blink">
-            <span className="mr-2 text-pink-500">const</span>
-            <span className="mr-2 text-white">project</span>
-            <span className="mr-2 text-pink-500">=</span>
-            <span className="text-gray-400">{'{'}</span>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
+        {/* Project details */}
+        <div className="flex flex-col space-y-4">
+          <div className="text-gray-300 text-sm md:text-base">
+            <p className="mb-4">{description}</p>
+            <p className="text-[#16f2b3]"><span className="font-bold">Role:</span> {role}</p>
           </div>
-          <div>
-            <span className="ml-4 lg:ml-8 mr-2 text-white">name:</span>
-            <span className="text-gray-400">{`'`}</span>
-            <span className="text-amber-300">{project.name}</span>
-            <span className="text-gray-400">{`',`}</span>
+          
+          <div className="flex flex-wrap gap-2 mt-2">
+            {tools.map((tool, index) => (
+              <span 
+                key={index} 
+                className="bg-[#1a1443] text-xs px-2 py-1 rounded-full text-gray-200"
+              >
+                {tool}
+              </span>
+            ))}
           </div>
-
-          <div className="ml-4 lg:ml-8 mr-2">
-            <span className=" text-white">tools:</span>
-            <span className="text-gray-400">{` ['`}</span>
-            {
-              project.tools.map((tag, i) => (
-                <React.Fragment key={i}>
-                  <span className="text-amber-300">{tag}</span>
-                  {
-                    project.tools?.length - 1 !== i &&
-                    <span className="text-gray-400">{`', '`}</span>
-                  }
-                </React.Fragment>
-              ))
-            }
-            <span className="text-gray-400">{"],"}</span>
+          
+          <div className="flex space-x-4 mt-4">
+            {code && (
+              <Link 
+                href={code} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-1 text-sm text-white hover:text-pink-500 transition-colors"
+              >
+                <FaGithub className="text-lg" />
+                <span>Code</span>
+              </Link>
+            )}
+            {demo && (
+              <Link 
+                href={demo} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-1 text-sm text-white hover:text-pink-500 transition-colors"
+              >
+                <FaExternalLinkAlt className="text-lg" />
+                <span>Live Demo</span>
+              </Link>
+            )}
           </div>
-          <div>
-            <span className="ml-4 lg:ml-8 mr-2 text-white">myRole:</span>
-            <span className="text-orange-400">{project.role}</span>
-            <span className="text-gray-400">,</span>
+        </div>
+        
+        {/* Project image */}
+        <div className="relative overflow-hidden rounded-lg h-48 md:h-full group bg-[#101123]">
+          {image ? (
+            <Image
+              src={image}
+              alt={name}
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-500 group-hover:scale-110"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1a1443] to-[#0f0b24]">
+              <span className="text-3xl font-bold text-[#16f2b3]">{name.charAt(0)}</span>
+            </div>
+          )}
+          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            {(code || demo) && (
+              <div className="flex space-x-4">
+                {code && (
+                  <Link 
+                    href={code}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-[#16f2b3] text-gray-900 p-2 rounded-full hover:bg-white transition-colors"
+                  >
+                    <FaGithub size={20} />
+                  </Link>
+                )}
+                {demo && (
+                  <Link 
+                    href={demo}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-[#16f2b3] text-gray-900 p-2 rounded-full hover:bg-white transition-colors"
+                  >
+                    <FaExternalLinkAlt size={20} />
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
-          <div className="ml-4 lg:ml-8 mr-2">
-            <span className="text-white">Description:</span>
-            <span className="text-cyan-400">{' ' + project.description}</span>
-            <span className="text-gray-400">,</span>
-          </div>
-          <div><span className="text-gray-400">{`};`}</span></div>
-        </code>
+        </div>
       </div>
     </div>
   );
