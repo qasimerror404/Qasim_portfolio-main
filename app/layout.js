@@ -11,7 +11,7 @@ const ClientLayoutWrapper = dynamic(() => import('./components/client-layout-wra
   ssr: true // We can keep SSR true since it no longer has hydration issues
 });
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap", preload: false });
 
 export const metadata = {
   title: "Qasim Abbas — Senior Flutter Developer | Fintech Mobile Engineer",
