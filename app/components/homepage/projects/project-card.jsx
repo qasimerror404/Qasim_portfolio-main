@@ -12,7 +12,8 @@ function ProjectCard({ project }) {
     role, 
     code, 
     demo, 
-    image 
+    image,
+    category,
   } = project;
 
   return (
@@ -27,9 +28,16 @@ function ProjectCard({ project }) {
           <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-orange-400"></div>
           <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-green-200"></div>
         </div>
-        <p className="text-center ml-10 text-[#16f2b3] text-base lg:text-xl font-bold">
-          {name}
-        </p>
+        <div className="flex items-center justify-center gap-3 ml-10">
+          <p className="text-center text-[#16f2b3] text-base lg:text-xl font-bold">
+            {name}
+          </p>
+          {category && (
+            <span className="hidden sm:inline-block text-xs px-2 py-0.5 rounded-full bg-violet-900/60 border border-violet-500/40 text-violet-300 font-medium">
+              {category}
+            </span>
+          )}
+        </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">

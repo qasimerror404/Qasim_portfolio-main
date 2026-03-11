@@ -24,11 +24,10 @@ function HeroSection() {
         <div className="order-2 lg:order-1 flex flex-col items-start justify-center p-2 pb-20 md:pb-10 lg:pt-10">
           <h1 className="text-3xl font-bold leading-10 text-white md:font-extrabold lg:text-[2.6rem] lg:leading-[3.5rem]">
             Hello, <br />
-            This is {' '}
-            <span className=" text-pink-500">{personalData.name}</span>
-            {` , I'm a Professional `}
-            <span className=" text-[#16f2b3]">{personalData.designation}</span>
-            .
+            I&apos;m{' '}
+            <span className="text-pink-500">{personalData.name}</span>
+            <br />
+            <span className="text-[#16f2b3]">{personalData.designation}</span>
           </h1>
 
           <div className="my-12 flex items-center gap-5">
@@ -101,14 +100,26 @@ function HeroSection() {
             <code className="font-mono text-xs md:text-sm lg:text-base">
               <div className="blink">
                 <span className="mr-2 text-pink-500">const</span>
-                <span className="mr-2 text-white">coder</span>
+                <span className="mr-2 text-white">engineer</span>
                 <span className="mr-2 text-pink-500">=</span>
                 <span className="text-gray-400">{'{'}</span>
               </div>
               <div>
                 <span className="ml-4 lg:ml-8 mr-2 text-white">name:</span>
                 <span className="text-gray-400">{`'`}</span>
-                <span className="text-amber-300">Qasim Error</span>
+                <span className="text-amber-300">Qasim Abbas</span>
+                <span className="text-gray-400">{`',`}</span>
+              </div>
+              <div>
+                <span className="ml-4 lg:ml-8 mr-2 text-white">role:</span>
+                <span className="text-gray-400">{`'`}</span>
+                <span className="text-amber-300">Senior Flutter Developer</span>
+                <span className="text-gray-400">{`',`}</span>
+              </div>
+              <div>
+                <span className="ml-4 lg:ml-8 mr-2 text-white">company:</span>
+                <span className="text-gray-400">{`'`}</span>
+                <span className="text-amber-300">Qi Card</span>
                 <span className="text-gray-400">{`',`}</span>
               </div>
               <div className="ml-4 lg:ml-8 mr-2">
@@ -118,50 +129,29 @@ function HeroSection() {
                 <span className="text-gray-400">{"', '"}</span>
                 <span className="text-amber-300">Dart</span>
                 <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Firebase</span>
+                <span className="text-amber-300">Clean Architecture</span>
                 <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Hive</span>
+                <span className="text-amber-300">BLoC</span>
                 <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Bloc</span>
+                <span className="text-amber-300">Riverpod</span>
                 <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Go Router</span>
+                <span className="text-amber-300">REST APIs</span>
                 <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">REST API</span>
+                <span className="text-amber-300">KYC / KYB</span>
                 <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">WebSockets</span>
+                <span className="text-amber-300">Flutter Desktop</span>
                 <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Linux Server Deployment</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Python</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">Telebot</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">TensorFlow Lite</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">YOLOv8</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">React</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">HTML</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">CSS</span>
-                <span className="text-gray-400">{"', '"}</span>
-                <span className="text-amber-300">JavaScript</span>
+                <span className="text-amber-300">Fintech</span>
                 <span className="text-gray-400">{"'],"}</span>
               </div>
-
               <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">hardWorker:</span>
-                <span className="text-orange-400">true</span>
-                <span className="text-gray-400">,</span>
+                <span className="ml-4 lg:ml-8 mr-2 text-white">focus:</span>
+                <span className="text-gray-400">{`'`}</span>
+                <span className="text-amber-300">Scalable Production Apps</span>
+                <span className="text-gray-400">{`',`}</span>
               </div>
               <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">quickLearner:</span>
-                <span className="text-orange-400">true</span>
-                <span className="text-gray-400">,</span>
-              </div>
-              <div>
-                <span className="ml-4 lg:ml-8 mr-2 text-white">problemSolver:</span>
+                <span className="ml-4 lg:ml-8 mr-2 text-white">openToWork:</span>
                 <span className="text-orange-400">true</span>
                 <span className="text-gray-400">,</span>
               </div>
@@ -176,12 +166,7 @@ function HeroSection() {
               </div>
               <div>
                 <span className="ml-12 lg:ml-24 text-cyan-400">this.</span>
-                <span className="mr-2 text-white">hardWorker</span>
-                <span className="text-amber-300">&amp;&amp;</span>
-              </div>
-              <div>
-                <span className="ml-12 lg:ml-24 text-cyan-400">this.</span>
-                <span className="mr-2 text-white">problemSolver</span>
+                <span className="mr-2 text-white">openToWork</span>
                 <span className="text-amber-300">&amp;&amp;</span>
               </div>
               <div>

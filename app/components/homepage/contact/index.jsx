@@ -17,6 +17,18 @@ function ContactSection() {
         </span>
         <span className="h-36 w-[2px] bg-[#1a1443]"></span>
       </div>
+
+      <div className="mb-10 text-center lg:text-left">
+        <p className="text-[#16f2b3] text-sm uppercase tracking-widest mb-2 font-medium">Get In Touch</p>
+        <h2 className="text-2xl lg:text-3xl font-bold text-white mb-3">
+          {"Let's Work Together"}
+        </h2>
+        <p className="text-gray-400 text-sm lg:text-base max-w-xl">
+          Open to senior Flutter roles, mobile engineering opportunities, and impactful product collaborations.
+          Whether you&apos;re a recruiter, hiring manager, or have a project in mind — feel free to reach out.
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
         <ContactForm />
         <div className="lg:w-3/4 ">

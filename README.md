@@ -158,7 +158,7 @@ export const personalData = {
   email: 'QasimError404@gmail.com',
   phone: '+9647721820362',
   address: 'Iraq, Baghdad',
-  github: 'https://github.com/Error160',
+  github: 'https://github.com/QasimError404',
   facebook: 'https://www.facebook.com/share/1EjyXEXZpD/',
   linkedIn: 'https://www.linkedin.com/in/qasim-abbas-598494252/',
   instagram: 'https://www.instagram.com/qasim_error404?igsh=dnpob3FianZoc24y&utm_source=qr',
