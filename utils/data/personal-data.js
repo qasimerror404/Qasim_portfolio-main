@@ -11,5 +11,5 @@ export const personalData = {
   linkedIn: 'https://www.linkedin.com/in/qasim-abbas-598494252/',
   instagram: 'https://www.instagram.com/qasim_error404?igsh=dnpob3FianZoc24y&utm_source=qr',
   devUsername: "QasimError",
-  resume: "https://drive.google.com/file/d/1eXs3kQ-0cTm_ZxfO2TyOJspDMid0z1eT/view"
+  resume: "https://docs.qasimerror.com/Qasim%20Abbas.pdf"
 }
